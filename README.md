@@ -35,3 +35,11 @@ plt.show()
 ```
 
 ![](https://raw.githubusercontent.com/prateekiiest/A-Novel-Clustering-Approach/master/images/iris_feature_plot.png)
+
+
+We then see the correlation among the features of the data set.
+
+
+```
+
+```
