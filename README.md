@@ -22,6 +22,7 @@ We use the iris data set in our case to evaluate our model in this respect.
 ### DataSet visualization
 
 So we first make the data visualization of the data set
+#### Feature Plot
 
 ```
 import pandas as pd
@@ -36,10 +37,48 @@ plt.show()
 
 ![](https://raw.githubusercontent.com/prateekiiest/A-Novel-Clustering-Approach/master/images/iris_feature_plot.png)
 
-
+#### Feature Correlation
 We then see the correlation among the features of the data set.
 
 
 ```
+corr = tmp.iloc[:,:].corr()
+colormap = sns.diverging_palette(220, 10, as_cmap = True)
+plt.figure(figsize=(14,14))
+sns.heatmap(corr, cbar = True,  square = True, annot=True, fmt= '.2f',annot_kws={'size': 8},
+            cmap = colormap, linewidths=0.1, linecolor='white')
+plt.title('Correlation of Iris Data Features', y=1.05, size=15)
+plt.show()
+```
+
+![](https://raw.githubusercontent.com/prateekiiest/A-Novel-Clustering-Approach/master/images/feature_plot.png)
+
+#### Class Distribution
 
 ```
+tmp = wbcd.drop('Id', axis=1)
+sns.countplot(tmp['Species'],label="Count")
+plt.show()
+```
+
+![](https://raw.githubusercontent.com/prateekiiest/A-Novel-Clustering-Approach/master/images/iris_plot_species.png)
+
+
+----------------------------------
+
+## Clustering Approach
+
+We know move on to our new clustering approach proposed.
+
+The clustering algorithm proposed is as follows
+- We initially have 150 clusters initialised by the object iteself, such as c_1, c_2,..........,c_150
+- For every pair of clusters c_i and c_j, compute cluster similarity using
+   s_ij = | c_i ∩ c_j | / | c_i u c_j |
+- Thus you have a cluster similarity matrix S = (s_ij)
+   If s_kl is the highest value in S then merge clusters c_k and c_l .
+   If multiple highest values are there separately merge them
+- If any cluster say c_t (≠ c_k and c_l) is a subset of (c_k u c_l) then discard it for all t = 1,2,...,150
+  t≠k and t≠l
+  Let c_d = number of clusters discarded
+- Let you have n = 150 - c_d - 1
+- If no. of clusters = m(predefined, user input) then return else goto step 2
